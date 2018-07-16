@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# forgethost <line>
+# @author: Adam K Dean <akd@dadi.co>
+# @purpose: Purges a line from known_hosts
+
+main() {
+  local known_hosts="$HOME/.ssh/known_hosts"
+  local known_hosts_tmp="$HOME/.ssh/known_hosts_tmp"
+
+  if [ ! -f "$known_hosts" ]; then
+    echo "file not found: $known_hosts"
+    exit 1
+  fi
+
+  sed "$1d" "$known_hosts" > "$known_hosts_tmp"
+  rm "$known_hosts"
+  mv "$known_hosts_tmp" "$known_hosts"
+}
+
+main $1
